@@ -1,12 +1,44 @@
 {
   "name": "telegram-login-ultimate",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "license": "MIT",
+  "author": {
+    "name": "nothugofsea",
+    "url": "https://github.com/nothugofsea"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "workspaces": [
+    "packages/*"
+  ],
+  "packageManager": "pnpm@9.2.0",
+  "repository": {
+    "url": "https://github.com/nothugofsea/telegram-login-ultimate.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/nothugofsea/telegram-login-ultimate",
+  "bugs": "https://github.com/nothugofsea/telegram-login-ultimate/issues",
+  "description": "Ultimate tool for working with telegram login widget with TypeScript support",
+  "main": "index.js",
+  "keywords": [
+    "telegram",
+    "login",
+    "widget",
+    "react"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "lint": "eslint \"src/**/*.{js,mjs,cjs}\"",
+    "format": "turbo run format",
+    "pretty": "turbo run pretty",
+    "unit-test": "turbo run unit-test",
+    "change": "beachball change --no-commit",
+    "release": "beachball publish --yes",
+    "lint:fix": "eslint \"src/**/*.{js,mjs,cjs}\" --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-kit": "^10.27.0",
+    "prettier": "^3.2.5",
+    "turbo": "^2.0.3"
+  }
 }
