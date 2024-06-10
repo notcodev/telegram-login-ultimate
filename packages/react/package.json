@@ -1,7 +1,7 @@
 {
   "name": "@telegram-login-ultimate/react",
   "version": "0.1.0",
-  "description": "Ultimate tool for working with telegram login widget with TypeScript support in your React application",
+  "description": "Ultimate tool for working with telegram login API with TypeScript support in your React application",
   "license": "MIT",
   "author": {
     "name": "nothugofsea",
