@@ -1,6 +1,6 @@
 # 🚀 Telegram Login React
 
-Ultimate tool for working with telegram login widget with TypeScript support in your React application
+Ultimate tool for working with Telegram login widget with TypeScript support in your React application
 
 ## Installation
 
