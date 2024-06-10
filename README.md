@@ -1,4 +1,4 @@
-# 🚀 Telegram Login React
+# 🚀 Telegram Login
 
 Ultimate tool for working with telegram login API with TypeScript support
 
