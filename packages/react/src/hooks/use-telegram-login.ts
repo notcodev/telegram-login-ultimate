@@ -109,16 +109,17 @@ export const useTelegramLogin = ({
         const currentPopup = popups.current[botId]
 
         if (!currentPopup.window || currentPopup.window.closed) {
-          return getAuthData({ botId }).then((res) => {
-            setIsPending(false)
-
-            if ('user' in res) onAuthDone(res.user)
-            else if (
-              botId in popups.current &&
-              !popups.current[botId].authFinished
-            )
-              onFail?.()
-          })
+          return getAuthData({ botId })
+            .then((res) => {
+              if ('user' in res) onAuthDone(res.user)
+              else if (
+                botId in popups.current &&
+                !popups.current[botId].authFinished
+              )
+                onFail?.()
+            })
+            .catch(console.error)
+            .finally(() => setIsPending(false))
         }
 
         setTimeout(() => checkClose(botId), 100)
