@@ -27,13 +27,13 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "deploy": "turbo run deploy",
-    "lint": "eslint \"src/**/*.{js,mjs,cjs}\"",
+    "lint": "turbo run lint",
     "format": "turbo run format",
     "pretty": "turbo run pretty",
     "unit-test": "turbo run unit-test",
     "change": "beachball change --no-commit",
     "release": "beachball publish --yes",
-    "lint:fix": "eslint \"src/**/*.{js,mjs,cjs}\" --fix"
+    "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
