@@ -1,6 +1,6 @@
 # 🚀 Telegram Login
 
-Ultimate tool for working with telegram login API with TypeScript support
+Ultimate tool for working with Telegram login API with TypeScript support
 
 ## 📦 Packages
 
