@@ -11,6 +11,9 @@
     "url": "https://github.com/nothugofsea/telegram-login-ultimate.git",
     "type": "git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/nothugofsea/telegram-login-ultimate",
   "bugs": "https://github.com/nothugofsea/telegram-login-ultimate/issues",
   "main": "dist/cjs/index.js",
