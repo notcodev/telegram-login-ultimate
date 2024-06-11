@@ -36,6 +36,7 @@
     "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
+    "beachball": "^2.43.1",
     "eslint": "^8.57.0",
     "eslint-kit": "^10.27.0",
     "prettier": "^3.2.5",
