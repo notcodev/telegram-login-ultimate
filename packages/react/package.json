@@ -4,11 +4,11 @@
   "description": "Ultimate tool for working with Telegram login API with TypeScript support in your React application",
   "license": "MIT",
   "author": {
-    "name": "nothugofsea",
-    "url": "https://github.com/nothugofsea"
+    "name": "notcodev",
+    "url": "https://github.com/notcodev"
   },
   "repository": {
-    "url": "https://github.com/nothugofsea/telegram-login-ultimate.git",
+    "url": "https://github.com/notcodev/telegram-login-ultimate.git",
     "type": "git"
   },
   "publishConfig": {
@@ -17,8 +17,8 @@
   "files": [
     "dist/**/*"
   ],
-  "homepage": "https://github.com/nothugofsea/telegram-login-ultimate",
-  "bugs": "https://github.com/nothugofsea/telegram-login-ultimate/issues",
+  "homepage": "https://github.com/notcodev/telegram-login-ultimate",
+  "bugs": "https://github.com/notcodev/telegram-login-ultimate/issues",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
