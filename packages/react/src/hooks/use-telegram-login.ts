@@ -5,61 +5,60 @@ const POPUP_HEIGHT = 470
 const POPUP_ORIGIN = 'https://oauth.telegram.org'
 
 export interface TelegramLoginData {
-  id: number
-  first_name: string
-  last_name?: string
-  username?: string
-  photo_url?: string
   auth_date: number
+  first_name: string
   hash: string
+  id: number
+  last_name?: string
+  photo_url?: string
+  username?: string
 }
 
 export interface UseTelegramLoginOptions {
   botId: number
-  onSuccess?: (data: TelegramLoginData) => unknown
   onFail?: () => unknown
+  onSuccess?: (data: TelegramLoginData) => unknown
 }
+
+export type UseTelegramLoginReturn = [
+  () => void,
+  { isPending: boolean },
+]
 
 export const useTelegramLogin = ({
   botId,
   onFail,
   onSuccess,
-}: UseTelegramLoginOptions) => {
+}: UseTelegramLoginOptions): UseTelegramLoginReturn => {
   const [isPending, setIsPending] = useState(false)
   const popups = useRef<
     Record<number, { window: Window | null; authFinished: boolean }>
   >({})
 
   return [
-    () => {
+    (): void => {
       const width = POPUP_WIDTH
       const height = POPUP_HEIGHT
-      const left = Math.max(0, (screen.width - width) / 2) + screen.availWidth
-      const top = Math.max(0, (screen.height - height) / 2) + screen.availHeight
+      const left =
+        Math.max(0, (screen.width - width) / 2) + screen.availWidth
+      const top =
+        Math.max(0, (screen.height - height) / 2) + screen.availHeight
 
-      const popupUrl =
-        POPUP_ORIGIN +
-        '/auth?bot_id=' +
-        encodeURIComponent(botId) +
-        '&origin=' +
-        encodeURIComponent(
-          location.origin || location.protocol + '//' + location.hostname,
-        ) +
-        '&return_to=' +
-        encodeURIComponent(location.href)
+      const popupUrl = `${
+        POPUP_ORIGIN
+      }/auth?bot_id=${encodeURIComponent(
+        botId,
+      )}&origin=${encodeURIComponent(
+        location.origin ||
+          `${location.protocol}//${location.hostname}`,
+      )}&return_to=${encodeURIComponent(location.href)}`
 
       const popup = window.open(
         popupUrl,
-        'telegram_oauth_bot' + botId,
-        'width=' +
-          width +
-          ',height=' +
-          height +
-          ',left=' +
-          left +
-          ',top=' +
-          top +
-          ',status=0,location=0,menubar=0,toolbar=0',
+        `telegram_oauth_bot${botId}`,
+        `width=${width},height=${height},left=${left},top=${
+          top
+        },status=0,location=0,menubar=0,toolbar=0`,
       )
 
       popups.current[botId] = {
@@ -74,12 +73,12 @@ export const useTelegramLogin = ({
         checkClose(botId)
       }
 
-      function onMessage(event: MessageEvent<string>) {
+      function onMessage(event: MessageEvent<string>): void {
         let data: { event: string; result: TelegramLoginData }
 
         try {
           data = JSON.parse(event.data)
-        } catch (error) {
+        } catch (_error) {
           return
         }
 
@@ -92,7 +91,7 @@ export const useTelegramLogin = ({
         }
       }
 
-      function onAuthDone(authData: TelegramLoginData) {
+      function onAuthDone(authData: TelegramLoginData): void {
         if (!(botId in popups.current)) return
 
         if (popups.current[botId].authFinished) return
@@ -103,13 +102,13 @@ export const useTelegramLogin = ({
         window.removeEventListener('message', onMessage)
       }
 
-      function checkClose(botId: number) {
+      function checkClose(botId: number): void {
         if (!(botId in popups.current)) return
 
         const currentPopup = popups.current[botId]
 
         if (!currentPopup.window || currentPopup.window.closed) {
-          return getAuthData({ botId })
+          getAuthData({ botId })
             .then((res) => {
               if ('user' in res) onAuthDone(res.user)
               else if (
@@ -120,22 +119,21 @@ export const useTelegramLogin = ({
             })
             .catch(console.error)
             .finally(() => setIsPending(false))
+          return
         }
 
         setTimeout(() => checkClose(botId), 100)
       }
 
       async function getAuthData(options: { botId: number }): Promise<
-        ({ user: TelegramLoginData } | { error: string }) & {
+        ({ error: string } | { user: TelegramLoginData }) & {
           html: string
           origin: string
         }
       > {
         return fetch(
-          POPUP_ORIGIN +
-            '/auth/get' +
-            '?bot_id=' +
-            encodeURIComponent(options.botId),
+          `${POPUP_ORIGIN}/auth/get` +
+            `?bot_id=${encodeURIComponent(options.botId)}`,
           {
             method: 'POST',
             headers: {

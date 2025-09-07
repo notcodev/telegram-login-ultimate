@@ -36,12 +36,13 @@
     "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
+    "@notcodev/eslint": "^1.4.2",
+    "@notcodev/prettier": "^1.2.0",
     "beachball": "^2.43.1",
-    "eslint": "^8.57.0",
-    "eslint-kit": "^10.27.0",
-    "prettier": "^3.2.5",
+    "eslint": "9.22.0",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
     "turbo": "^2.0.3",
-    "typescript": "^5.6.2",
-    "shx": "^0.3.4"
+    "typescript": "^5.6.2"
   }
 }

@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 
 const App = () => {
   const [openPopup, { isPending }] = useTelegramLogin({
-    botId: 5948544568,
+    botId: 7783073834,
     onSuccess: (user) => console.log('@@', user),
     onFail: () => console.log('Popup closed'),
   })
