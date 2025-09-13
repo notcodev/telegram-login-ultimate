@@ -1,25 +1,31 @@
-import { useTelegramLogin } from '../src'
+import { TelegramLoginClient } from '@telegram-login-ultimate/core'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+
+import { TelegramLoginProvider, useTelegramLogin } from '../src'
 
 const App = () => {
   const [openPopup, { isPending }] = useTelegramLogin({
     botId: 7783073834,
     onSuccess: (user) => console.log('@@', user),
-    onFail: () => console.log('Popup closed'),
+    onError: () => console.log('Popup closed'),
   })
 
   return (
-    <button disabled={isPending} onClick={openPopup}>
+    <button disabled={isPending} type='button' onClick={openPopup}>
       {isPending ? 'Popup opened' : 'Open popup'}
     </button>
   )
 }
 
+const telegramLoginClient = new TelegramLoginClient()
+
 const root = createRoot(document.querySelector('#app')!)
 
 root.render(
   <React.StrictMode>
-    <App />
+    <TelegramLoginProvider client={telegramLoginClient}>
+      <App />
+    </TelegramLoginProvider>
   </React.StrictMode>,
 )
