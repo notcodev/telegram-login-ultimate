@@ -36,6 +36,7 @@
     "lint:fix": "turbo run lint:fix"
   },
   "devDependencies": {
+    "@eslint/config-inspector": "^1.2.0",
     "@notcodev/eslint": "^1.4.2",
     "@notcodev/prettier": "^1.2.0",
     "beachball": "^2.43.1",

@@ -1,0 +1,30 @@
+{
+  "name": "@telegram-login-ultimate/docs",
+  "version": "1.0.0",
+  "description": "Ultimate tool",
+  "license": "MIT",
+  "author": {
+    "name": "notcodev",
+    "url": "https://github.com/notcodev"
+  },
+  "repository": {
+    "url": "https://github.com/notcodev/telegram-login-ultimate.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/notcodev/telegram-login-ultimate",
+  "bugs": "https://github.com/notcodev/telegram-login-ultimate/issues",
+  "scripts": {
+    "dev": "vitepress dev app",
+    "build": "vitepress build app",
+    "preview": "vitepress preview app",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:inspect": "eslint-config-inspector",
+    "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
+    "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
+    "typecheck": "tsc -b"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4"
+  }
+}
