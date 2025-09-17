@@ -8,11 +8,11 @@ hero:
   tagline: The best way to work with Telegram Login API, designed to simplify the process of integrating Telegram Login into your website.
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Get Started
+      link: /introduction
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: View on GitHub
+      link: https://github.com/notcodev/telegram-login-ultimate
 
 features:
   - title: Feature A
