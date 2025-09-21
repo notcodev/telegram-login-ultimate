@@ -5,8 +5,21 @@ import { useContext, useState } from 'react'
 import { TelegramLoginContext } from './context'
 
 export interface UseTelegramLoginOptions {
+  /**
+   * The unique identifier of the Telegram bot. You can obtain it from the https://t.me/username_to_id_bot.
+   */
   botId: number
+
+  /**
+   * Optional callback function that will be called if an error occurs during the login process.
+   * @param {unknown} error - The error that occurred.
+   */
   onError?: (error: unknown) => void
+
+  /**
+   * Optional callback function that will be called when the login process completes successfully.
+   * @param {TelegramUserData} data - The authentication data returned from Telegram.
+   */
   onSuccess?: (data: TelegramUserData) => void
 }
 
