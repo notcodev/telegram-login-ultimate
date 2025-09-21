@@ -1,8 +1,14 @@
 import { POPUP_ORIGIN } from './consts'
 import { buildUrl } from './utils'
 
-interface PopupOptions {
+export interface PopupOptions {
+  /**
+   * Height of the popup
+   */
   height: number
+  /**
+   * Width of the popup
+   */
   width: number
 }
 
