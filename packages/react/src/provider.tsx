@@ -4,6 +4,10 @@ import { TelegramLoginContext } from './context'
 
 export interface TelegramLoginProviderProps {
   children: React.ReactNode
+
+  /**
+   * Telegram login client instance.
+   */
   client: TelegramLoginClient
 }
 

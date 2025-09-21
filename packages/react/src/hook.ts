@@ -24,7 +24,14 @@ export interface UseTelegramLoginOptions {
 }
 
 export interface UseTelegramLoginReturn {
+  /**
+   * Flag indicating whether the login process is pending.
+   */
   isPending: boolean
+
+  /**
+   * Function to start the login process.
+   */
   start: () => void
 }
 
