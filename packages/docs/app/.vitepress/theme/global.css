@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+@source '../../../src';
+
+:root {
+  --vp-c-brand-1: #007aff;
+  --vp-c-brand-2: #0061fe;
+  --vp-c-brand-3: #3b86fe;
+}
+
+.dark {
+  --vp-c-brand-1: #2990ff;
+}

@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
@@ -11,11 +12,11 @@ export default defineConfig({
       {
         text: 'Packages',
         items: [
-          { text: 'React', link: '/react' },
-          { text: 'Vue', link: '/vue' },
-          { text: 'Angular', link: '/angular' },
-          { text: 'Svelte', link: '/svelte' },
-          { text: 'Solid', link: '/solid' },
+          { text: 'React', link: '/packages/react' },
+          { text: 'Vue', link: '/packages/vue' },
+          { text: 'Angular', link: '/packages/angular' },
+          { text: 'Svelte', link: '/packages/svelte' },
+          { text: 'Solid', link: '/packages/solid' },
         ],
       },
     ],
@@ -30,11 +31,11 @@ export default defineConfig({
       {
         text: 'Packages',
         items: [
-          { text: 'React', link: '/react', items: [] },
-          { text: 'Vue', link: '/vue', items: [] },
-          { text: 'Angular', link: '/angular', items: [] },
-          { text: 'Svelte', link: '/svelte', items: [] },
-          { text: 'Solid', link: '/solid', items: [] },
+          { text: 'React', link: '/packages/react' },
+          { text: 'Vue', link: '/packages/vue' },
+          { text: 'Angular', link: '/packages/angular' },
+          { text: 'Svelte', link: '/packages/svelte' },
+          { text: 'Solid', link: '/packages/solid' },
         ],
       },
     ],
@@ -48,5 +49,8 @@ export default defineConfig({
         link: 'https://www.npmjs.com/org/telegram-login-ultimate',
       },
     ],
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
 })
