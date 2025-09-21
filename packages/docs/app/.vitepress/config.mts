@@ -1,5 +1,9 @@
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vitepress'
+import {
+  groupIconMdPlugin,
+  groupIconVitePlugin,
+} from 'vitepress-plugin-group-icons'
 
 export default defineConfig({
   title: 'Telegram Login Ultimate',
@@ -51,6 +55,11 @@ export default defineConfig({
     ],
   },
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss(), groupIconVitePlugin()],
+  },
+  markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin)
+    },
   },
 })
