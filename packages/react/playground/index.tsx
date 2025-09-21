@@ -5,14 +5,14 @@ import { createRoot } from 'react-dom/client'
 import { TelegramLoginProvider, useTelegramLogin } from '../src'
 
 const App = () => {
-  const [openPopup, { isPending }] = useTelegramLogin({
+  const { start, isPending } = useTelegramLogin({
     botId: 7783073834,
     onSuccess: (user) => console.log('@@', user),
     onError: () => console.log('Popup closed'),
   })
 
   return (
-    <button disabled={isPending} type='button' onClick={openPopup}>
+    <button type='button' onClick={start}>
       {isPending ? 'Popup opened' : 'Open popup'}
     </button>
   )

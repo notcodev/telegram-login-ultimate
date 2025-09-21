@@ -10,10 +10,10 @@ export interface UseTelegramLoginOptions {
   onSuccess?: (data: TelegramUserData) => void
 }
 
-export type UseTelegramLoginReturn = [
-  () => void,
-  { isPending: boolean },
-]
+export interface UseTelegramLoginReturn {
+  isPending: boolean
+  start: () => void
+}
 
 export const useTelegramLogin = ({
   botId,
@@ -43,7 +43,7 @@ export const useTelegramLogin = ({
     onSuccess?.(data)
   }
 
-  const handleLogin = (): void => {
+  const start = (): void => {
     client.login({
       botId,
       onError: handleError,
@@ -52,5 +52,5 @@ export const useTelegramLogin = ({
     })
   }
 
-  return [handleLogin, { isPending }] as const
+  return { start, isPending } as const
 }
