@@ -155,11 +155,11 @@ export class TelegramLoginClient {
       }
     }
 
-    const checkClose = async (
-      popup: PopupInstance,
-    ): Promise<void> => {
+    const checkClose = async (botId: number): Promise<void> => {
+      const popup = this.popups[botId]
+      if (!popup || popup.authFinished) return
       if (!popup.window.closed) {
-        setTimeout(() => checkClose(popup), 100)
+        setTimeout(() => checkClose(botId), 100)
         return
       }
 
@@ -178,13 +178,17 @@ export class TelegramLoginClient {
     }
 
     if (popup) {
+      const isPopupAlreadyExists =
+        this.popups[botId]?.window.closed === false
+
       this.popups[botId] = { window: popup, authFinished: false }
       popup.focus()
 
-      window.addEventListener('message', handleMessage)
-      checkClose(this.popups[botId])
-
-      onStart?.()
+      if (!isPopupAlreadyExists) {
+        window.addEventListener('message', handleMessage)
+        checkClose(botId)
+        onStart?.()
+      }
     }
   }
 
