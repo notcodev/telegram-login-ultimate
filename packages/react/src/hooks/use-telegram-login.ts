@@ -5,18 +5,51 @@ const POPUP_HEIGHT = 470
 const POPUP_ORIGIN = 'https://oauth.telegram.org'
 
 export interface TelegramLoginData {
-  id: number
-  first_name: string
-  last_name?: string
-  username?: string
-  photo_url?: string
+  /**
+   * Unix timestamp indicating when the authentication occurred.
+   */
   auth_date: number
+  /**
+   * User's first name.
+   */
+  first_name: string
+  /**
+   * Data hash for verification of the authentication data integrity.
+   */
   hash: string
+  /**
+   * Unique identifier for the user.
+   */
+  id: number
+  /**
+   * User's last name, if available.
+   */
+  last_name?: string
+  /**
+   * URL of the user's profile photo, if available.
+   */
+  photo_url?: string
+  /**
+   * User's username, if available.
+   */
+  username?: string
 }
 
 export interface UseTelegramLoginOptions {
+  /**
+   * The unique identifier of the Telegram bot. You can obtain it from the https://t.me/username_to_id_bot.
+   */
   botId: number
+
+  /**
+   * Optional callback function that will be called when the login process completes successfully.
+   * @param {TelegramUserData} data - The authentication data returned from Telegram.
+   */
   onSuccess?: (data: TelegramLoginData) => unknown
+
+  /**
+   * Optional callback function that will be called if an error occurs during the login process.
+   */
   onFail?: () => unknown
 }
 
@@ -78,7 +111,8 @@ export const useTelegramLogin = ({
         if (event.source !== popups.current[botId].window) return
         if (!(botId in popups.current)) return
 
-        const data: { event: string; result: TelegramLoginData | false } = JSON.parse(event.data)
+        const data: { event: string; result: TelegramLoginData | false } =
+          JSON.parse(event.data)
 
         if (data.event === 'auth_result') {
           onAuth(data.result)
