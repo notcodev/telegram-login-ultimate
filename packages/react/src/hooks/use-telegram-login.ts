@@ -75,30 +75,27 @@ export const useTelegramLogin = ({
       }
 
       function onMessage(event: MessageEvent<string>) {
-        let data: { event: string; result: TelegramLoginData }
-
-        try {
-          data = JSON.parse(event.data)
-        } catch (error) {
-          return
-        }
-
+        if (event.source !== popups.current[botId].window) return
         if (!(botId in popups.current)) return
 
-        if (event.source !== popups.current[botId].window) return
+        const data: { event: string; result: TelegramLoginData | false } = JSON.parse(event.data)
+
         if (data.event === 'auth_result') {
-          setIsPending(false)
-          onAuthDone(data.result)
+          onAuth(data.result)
         }
       }
 
-      function onAuthDone(authData: TelegramLoginData) {
+      function onAuth(authData: TelegramLoginData | false) {
         if (!(botId in popups.current)) return
-
         if (popups.current[botId].authFinished) return
 
-        onSuccess?.(authData)
+        if (authData) {
+          onSuccess?.(authData)
+        } else {
+          onFail?.()
+        }
 
+        setIsPending(false)
         popups.current[botId].authFinished = true
         window.removeEventListener('message', onMessage)
       }
@@ -111,15 +108,16 @@ export const useTelegramLogin = ({
         if (!currentPopup.window || currentPopup.window.closed) {
           return getAuthData({ botId })
             .then((res) => {
-              if ('user' in res) onAuthDone(res.user)
-              else if (
-                botId in popups.current &&
-                !popups.current[botId].authFinished
-              )
-                onFail?.()
+              if ('user' in res) {
+                onAuth(res.user)
+              } else {
+                onAuth(false)
+              }
             })
-            .catch(console.error)
-            .finally(() => setIsPending(false))
+            .catch(() => {
+              setIsPending(false)
+              onFail?.()
+            })
         }
 
         setTimeout(() => checkClose(botId), 100)
@@ -131,21 +129,24 @@ export const useTelegramLogin = ({
           origin: string
         }
       > {
-        return fetch(
+        const url =
           POPUP_ORIGIN +
-            '/auth/get' +
-            '?bot_id=' +
-            encodeURIComponent(options.botId),
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type':
-                'application/x-www-form-urlencoded; charset=UTF-8',
-              'X-Requested-With': 'XMLHttpRequest',
-            },
-            credentials: 'include',
-          },
-        ).then((res) => res.json())
+          '/auth/get' +
+          '?bot_id=' +
+          encodeURIComponent(options.botId)
+
+        const headers = {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+          'X-Requested-With': 'XMLHttpRequest',
+        }
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers,
+          credentials: 'include',
+        })
+
+        return response.json()
       }
     },
     { isPending },
