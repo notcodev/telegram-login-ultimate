@@ -16,4 +16,4 @@ pnpm add @telegram-login-ultimate/react
 
 ## Documentation
 
-You can find documentation [here](https://telegram-login-ultimate.vercel.app/packages/react)
+You can find documentation [here](https://telegram-login-ultimate.vercel.app/packages/react.html)
