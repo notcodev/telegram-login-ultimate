@@ -5,7 +5,7 @@ export const buildUrl = (
   const searchParams = new URLSearchParams()
 
   for (const [key, value] of Object.entries(params)) {
-    searchParams.append(key, encodeURIComponent(value))
+    searchParams.append(key, value.toString())
   }
 
   return `${base}?${searchParams.toString()}`
