@@ -14,32 +14,6 @@ yarn add @telegram-login-ultimate/react
 pnpm add @telegram-login-ultimate/react
 ```
 
-## Features
+## Documentation
 
-- TypeScript support out of the box - full typed package
-- Simple usage - import hook and use
-
-## Usage
-
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { useTelegramLogin } from '@telegram-login-ultimate/react';
-
-const App = () => {
-  const [openPopup, { isPending }] = useTelegramLogin({
-    botId: <your_bot_id>,
-    onSuccess: (user) => handleSuccess(user),
-    onFail: () => handleFail(),
-  })
-
-  return (
-    <button disabled={isPending} onClick={openPopup}>
-      {isPending ? 'Popup opened' : 'Open popup'}
-    </button>
-  )
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App/>);
-```
+You can find documentation [here](https://telegram-login-ultimate.vercel.app/packages/react)
