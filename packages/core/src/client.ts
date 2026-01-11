@@ -1,4 +1,5 @@
 import { POPUP_ORIGIN } from './consts'
+import { AuthenticationError } from './exceptions'
 import { buildUrl } from './utils'
 
 export interface PopupOptions {
@@ -24,6 +25,10 @@ type GetAuthResponse = (
   html: string
   origin: string
 }
+
+type AuthResult =
+  | { data: null; error: Error }
+  | { data: TelegramUserData; error: null }
 
 /**
  * Data returned after a successful Telegram login authentication.
@@ -137,14 +142,16 @@ export class TelegramLoginClient {
 
     const popup = this.openPopup(botId, { width, height })
 
-    const handleAuthDone = (
-      popup: PopupInstance,
-      authData: TelegramUserData,
-    ): void => {
-      if (popup.authFinished) return
+    const handleAuth = ({ data, error }: AuthResult): void => {
+      const popup = this.popups[botId]
+      if (!popup || popup.authFinished) return
       popup.authFinished = true
 
-      onSuccess?.(authData)
+      if (data) {
+        onSuccess?.(data)
+      } else {
+        onError?.(error)
+      }
     }
 
     const handleMessage = (event: MessageEvent<string>): void => {
@@ -152,35 +159,51 @@ export class TelegramLoginClient {
       if (!popup) return
       if (event.source !== popup.window) return
 
-      const data: { event: string; result: TelegramUserData } =
-        JSON.parse(event.data)
+      const data: {
+        event: string
+        result: false | TelegramUserData
+      } = JSON.parse(event.data)
 
       if (data.event === 'auth_result') {
-        handleAuthDone(popup, data.result)
+        const result = data.result
+          ? { data: data.result, error: null }
+          : { data: null, error: new AuthenticationError() }
+
+        handleAuth(result)
         window.removeEventListener('message', handleMessage)
       }
     }
 
-    const checkClose = async (botId: number): Promise<void> => {
+    const checkClose = async (): Promise<void> => {
       const popup = this.popups[botId]
+
       if (!popup || popup.authFinished) return
       if (!popup.window.closed) {
-        setTimeout(() => checkClose(botId), 100)
+        setTimeout(checkClose, 100)
         return
       }
 
+      let result: AuthResult
+
       try {
         const response = await this.getAuthData(botId)
-        if ('user' in response) {
-          handleAuthDone(popup, response.user)
-        } else if (botId in this.popups && !popup.authFinished) {
-          onError?.(new Error(response.error))
-        }
+        result =
+          'user' in response
+            ? {
+                data: response.user,
+                error: null,
+              }
+            : {
+                data: null,
+                error: new AuthenticationError(response.error),
+              }
       } catch (error) {
-        onError?.(error)
-      } finally {
-        window.removeEventListener('message', handleMessage)
+        // Casting error to Error type because it cannot be another type
+        result = { data: null, error: error as Error }
       }
+
+      handleAuth(result)
+      window.removeEventListener('message', handleMessage)
     }
 
     if (popup) {
@@ -192,7 +215,7 @@ export class TelegramLoginClient {
 
       if (!isPopupAlreadyExists) {
         window.addEventListener('message', handleMessage)
-        checkClose(botId)
+        checkClose()
         onStart?.()
       }
     }
