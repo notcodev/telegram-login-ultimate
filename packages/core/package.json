@@ -1,6 +1,6 @@
 {
   "name": "@telegram-login-ultimate/core",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "description": "Ultimate tool for working with Telegram Login API with TypeScript support",
   "license": "MIT",
   "author": {
@@ -23,7 +23,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "lint": "eslint . --ext ts --ext tsx --no-error-on-unmatched-pattern --fix"
   },
   "keywords": [

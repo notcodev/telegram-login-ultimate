@@ -1,6 +1,6 @@
 {
   "name": "@telegram-login-ultimate/react",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Ultimate tool for working with Telegram login API with TypeScript support in your React application",
   "license": "MIT",
   "author": {
@@ -23,7 +23,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "lint": "eslint . --ext ts --ext tsx --no-error-on-unmatched-pattern --fix",
     "dev": "cd ./playground && vite"
   },
