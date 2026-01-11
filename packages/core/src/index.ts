@@ -5,3 +5,4 @@ export type {
   TelegramLoginClientOptions,
   TelegramUserData,
 } from './client'
+export { isAuthenticationError } from './exceptions'
